@@ -135,6 +135,8 @@ type MergeOperation struct {
 }
 
 func (cli *githubClient) doMergeOperation(ctx context.Context, op *MergeOperation) error {
-	_, _, err := cli.client.PullRequests.Merge(ctx, op.Owner, op.Repo, op.Number, "auto merged by freebot", nil)
+	_, _, err := cli.client.PullRequests.Merge(ctx, op.Owner, op.Repo, op.Number, "", &github.PullRequestOptions{
+		MergeMethod: "squash",
+	})
 	return err
 }
